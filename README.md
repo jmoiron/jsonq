@@ -69,5 +69,5 @@ Missing keys, out of bounds indexes, and type failures are all returned in the
 error channels. For simplicity, integer keys (ie, {"0": "zero"}) are inaccessible
 by `jsonq` as integer strings are assumed to be array indexes.
 
-Suggestions/comments please tweet @jmoiron
+Suggestions/comments please tweet [@jmoiron](http://twitter.com/jmoiron)
 
