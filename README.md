@@ -1,7 +1,8 @@
 # jsonq
 
 Simplify your golang json usage by extracting fields or items from arrays and
-objects with a simple, hierarchical query.
+objects with a simple, hierarchical query. [API
+Documentation](http://go.pkgdoc.org/github.com/jmoiron/jsonq) on go.pkgdoc.org.
 
 # installing
 
@@ -63,6 +64,9 @@ jq.Int("subobj", "subarray", "1")
 
 // data["subobj"]["subarray"]["array"][0] -> "hello"
 jq.String("subobj", "subsubobj", "array", "0")
+
+// data["subobj"] -> map[string]interface{}{"subobj": ...}
+obj, err := jq.Object("subobj")
 ```
 
 Missing keys, out of bounds indexes, and type failures are all returned in the
