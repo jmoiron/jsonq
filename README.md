@@ -1,8 +1,8 @@
 # jsonq
 
-Simplify your golang json usage by extracting fields or items from arrays and
-objects with a simple, hierarchical query. [API
-Documentation](http://go.pkgdoc.org/github.com/jmoiron/jsonq) on go.pkgdoc.org.
+Simplify your golang json usage by extracting fields or items from arrays and objects with a simple, hierarchical query. [API Documentation](http://go.pkgdoc.org/github.com/jmoiron/jsonq) on go.pkgdoc.org.
+
+This package is meant to make working with complex feeds a bit more easy. If you have simple feeds you want to model with struct types, check out [jflect](http://github.com/str1ngs/jflect), which will create struct definitions given a json document.
 
 # installing
 
