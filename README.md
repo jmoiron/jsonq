@@ -73,5 +73,8 @@ Missing keys, out of bounds indexes, and type failures will return errors.
 For simplicity, integer keys (ie, {"0": "zero"}) are inaccessible
 by `jsonq` as integer strings are assumed to be array indexes.
 
+The `Int` and `Float` methods will attempt to parse numbers from string
+values to ease the use of many real world feeds which deliver numbers as strings.
+
 Suggestions/comments please tweet [@jmoiron](http://twitter.com/jmoiron)
 

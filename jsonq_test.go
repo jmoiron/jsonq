@@ -12,6 +12,8 @@ const TestData = `{
 	"bar": 2,
 	"test": "Hello, world!",
 	"baz": 123.1,
+	"numstring": "42",
+	"floatstring": "42.1",
 	"array": [
 		{"foo": 1},
 		{"bar": 2},
@@ -59,6 +61,13 @@ func TestQuery(t *testing.T) {
 	}
 	tErr(t, err)
 
+	// test that strings can get int-ed
+	ival, err = q.Int("numstring")
+	if ival != 42 {
+		t.Errorf("Expecting 42, got %v\n", ival)
+	}
+	tErr(t, err)
+
 	for i := 0; i < 3; i++ {
 		ival, err := q.Int("subobj", "subarray", fmt.Sprintf("%d", i))
 		if ival != i+1 {
@@ -70,6 +79,13 @@ func TestQuery(t *testing.T) {
 	fval, err := q.Float("baz")
 	if fval != 123.1 {
 		t.Errorf("Expecting 123.1, got %f\n", fval)
+	}
+	tErr(t, err)
+
+	// test that strings can get float-ed
+	fval, err = q.Float("floatstring")
+	if fval != 42.1 {
+		t.Errorf("Expecting 42.1, got %v\n", fval)
 	}
 	tErr(t, err)
 
