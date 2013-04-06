@@ -38,6 +38,8 @@ func (j *JsonQuery) Float(s ...string) (float64, error) {
 	switch val.(type) {
 	case float64:
 		return val.(float64), nil
+	case int:
+		return float64(val.(int)), nil
 	case string:
 		fval, err := strconv.ParseFloat(val.(string), 64)
 		if err == nil {
@@ -61,6 +63,8 @@ func (j *JsonQuery) Int(s ...string) (int, error) {
 		if err == nil {
 			return int(ival), nil
 		}
+	case int:
+		return val.(int), nil
 	}
 	return 0, fmt.Errorf("Expected numeric value for Int, got \"%v\"\n", val)
 }
