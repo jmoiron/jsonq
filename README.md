@@ -38,7 +38,7 @@ Given some json data like:
 }
 ```
 
-Decode it into a `map[string]interrface{}`:
+Decode it into a `map[string]interface{}`:
 
 ```go
 import (
