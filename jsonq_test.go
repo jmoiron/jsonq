@@ -28,6 +28,16 @@ const TestData = `{
 			"array": ["hello", "world"]
 		}
 	},
+	"collections": {
+		"bools": [false, true, false],
+		"strings": ["hello", "strings"],
+		"numbers": [1,2,3,4],
+		"arrays": [[1.0,2.0],[2.0,3.0],[4.0,3.0]],
+		"objects": [
+			{"obj1": 1},
+			{"obj2": 2}
+		]
+	},
 	"bool": true
 }`
 
@@ -120,4 +130,51 @@ func TestQuery(t *testing.T) {
 	if aobj[0].(float64) != 1 {
 		t.Errorf("Expecting 1, got %v\n", aobj[0])
 	}
+
+	/*
+		Test Extraction of typed slices
+	*/
+
+	//test array of strings
+	astrings, err := q.ArrayOfStrings("collections", "strings")
+	tErr(t, err)
+	if astrings[0] != "hello" {
+		t.Errorf("Expecting hello, got %v\n", astrings[0])
+	}
+
+	//test array of ints
+	aints, err := q.ArrayOfInts("collections", "numbers")
+	tErr(t, err)
+	if aints[0] != 1 {
+		t.Errorf("Expecting 1, got %v\n", aints[0])
+	}
+
+	//test array of floats
+	afloats, err := q.ArrayOfFloats("collections", "numbers")
+	tErr(t, err)
+	if afloats[0] != 1.0 {
+		t.Errorf("Expecting 1.0, got %v\n", afloats[0])
+	}
+
+	//test array of bools
+	abools, err := q.ArrayOfBools("collections", "bools")
+	tErr(t, err)
+	if abools[0] {
+		t.Errorf("Expecting true, got %v\n", abools[0])
+	}
+
+	//test array of arrays
+	aa, err := q.ArrayOfArrays("collections", "arrays")
+	tErr(t, err)
+	if aa[0][0].(float64) != 1 {
+		t.Errorf("Expecting 1, got %v\n", aa[0][0])
+	}
+
+	//test array of objs
+	aobjs, err := q.ArrayOfObjects("collections", "objects")
+	tErr(t, err)
+	if aobjs[0]["obj1"].(float64) != 1 {
+		t.Errorf("Expecting 1, got %v\n", aobjs[0]["obj1"])
+	}
+
 }
