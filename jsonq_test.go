@@ -131,6 +131,12 @@ func TestQuery(t *testing.T) {
 		t.Errorf("Expecting 1, got %v\n", aobj[0])
 	}
 
+	iobj, err := q.Interface("numstring")
+	tErr(t, err)
+	if _, ok := iobj.(string); !ok {
+		t.Errorf("Expecting type string got: %s", iobj)
+	}
+
 	/*
 		Test Extraction of typed slices
 	*/

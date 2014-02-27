@@ -70,7 +70,7 @@ func objectFromInterface(val interface{}) (map[string]interface{}, error) {
 	case map[string]interface{}:
 		return val.(map[string]interface{}), nil
 	}
-	return map[string]interface{}{}, fmt.Errorf("Expected json object for Object, get \"%v\"\n", val)
+	return map[string]interface{}{}, fmt.Errorf("Expected json object for Object, got \"%v\"\n", val)
 }
 
 //arrayFromInterface converts an interface{} to an []interface{} and returns an error if types don't match.
@@ -79,7 +79,7 @@ func arrayFromInterface(val interface{}) ([]interface{}, error) {
 	case []interface{}:
 		return val.([]interface{}), nil
 	}
-	return []interface{}{}, fmt.Errorf("Expected json array for Array, get \"%v\"\n", val)
+	return []interface{}{}, fmt.Errorf("Expected json array for Array, got \"%v\"\n", val)
 }
 
 // Create a new JsonQuery obj from a json-decoded interface{}
@@ -141,6 +141,15 @@ func (j *JsonQuery) Array(s ...string) ([]interface{}, error) {
 		return []interface{}{}, err
 	}
 	return arrayFromInterface(val)
+}
+
+// Extract interface from some json
+func (j *JsonQuery) Interface(s ...string) (interface{}, error) {
+	val, err := rquery(j.blob, s...)
+	if err != nil {
+		return nil, err
+	}
+	return val, nil
 }
 
 /*
