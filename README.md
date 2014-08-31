@@ -1,6 +1,7 @@
 # jsonq
 
-[![Build Status](https://drone.io/github.com/jmoiron/jsonq/status.png)](https://drone.io/github.com/jmoiron/jsonq/latest)
+[![Build Status](https://drone.io/github.com/jmoiron/jsonq/status.png)](https://drone.io/github.com/jmoiron/jsonq/latest) [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://godoc.org/github.com/jmoiron/jsonq) [![license](http://img.shields.io/badge/license-MIT-red.svg?style=flat)](https://raw.githubusercontent.com/jmoiron/jsonq/master/LICENSE)
+
 
 Simplify your golang json usage by extracting fields or items from arrays and objects with a simple, hierarchical query. [API Documentation](http://godoc.org/github.com/jmoiron/jsonq) on godoc.org.
 
