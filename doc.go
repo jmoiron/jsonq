@@ -1,11 +1,5 @@
 /*
-Simplify your golang json usage with a simple hierarchical query.
-
-Installing
-
-	go get github.com/jmoiron/jsonq
-
-Examples
+Package jsonq simplify your json usage with a simple hierarchical query.
 
 Given some json data like:
 
@@ -58,10 +52,10 @@ From here, you can query along different keys and indexes:
 	// data["subobj"] -> map[string]interface{}{"subobj": ...}
 	obj, err := jq.Object("subobj")
 
-Notes
+	Notes:
 
 Missing keys, out of bounds indexes, and type failures will return errors.
-For simplicity, integer keys (ie, {"0": "zero"}) are inaccessible by `jsonq` 
+For simplicity, integer keys (ie, {"0": "zero"}) are inaccessible by `jsonq`
 as integer strings are assumed to be array indexes.
 
 */
