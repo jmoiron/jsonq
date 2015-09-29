@@ -9,7 +9,8 @@ import (
 // JsonQuery is an object that enables querying of a Go map with a simple
 // positional query language.
 type JsonQuery struct {
-	blob map[string]interface{}
+	blob                    map[string]interface{}
+	SingleValuePanicOnError bool
 }
 
 // stringFromInterface converts an interface{} to a string and returns an error if types don't match.
@@ -84,6 +85,7 @@ func arrayFromInterface(val interface{}) ([]interface{}, error) {
 func NewQuery(data interface{}) *JsonQuery {
 	j := new(JsonQuery)
 	j.blob = data.(map[string]interface{})
+	j.SingleValuePanicOnError = true
 	return j
 }
 
@@ -100,7 +102,10 @@ func (j *JsonQuery) Bool(s ...string) (bool, error) {
 func (j *JsonQuery) AsBool(s ...string) bool {
 	val, err := j.Bool(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
+		return false
 	}
 	return val
 }
@@ -118,7 +123,10 @@ func (j *JsonQuery) Float(s ...string) (float64, error) {
 func (j *JsonQuery) AsFloat(s ...string) float64 {
 	val, err := j.Float(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
+		return 0.0
 	}
 	return val
 }
@@ -136,7 +144,9 @@ func (j *JsonQuery) Int(s ...string) (int, error) {
 func (j *JsonQuery) AsInt(s ...string) int {
 	val, err := j.Int(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -154,9 +164,20 @@ func (j *JsonQuery) String(s ...string) (string, error) {
 func (j *JsonQuery) AsString(s ...string) string {
 	val, err := j.String(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
+}
+
+// Exists return true if node can be accessed, else false
+func (j *JsonQuery) Exists(s ...string) bool {
+	_, err := j.Interface(s...)
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 // Object extracts a json object from the JsonQuery
@@ -172,7 +193,9 @@ func (j *JsonQuery) Object(s ...string) (map[string]interface{}, error) {
 func (j *JsonQuery) AsObject(s ...string) map[string]interface{} {
 	val, err := j.Object(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -190,7 +213,9 @@ func (j *JsonQuery) Array(s ...string) ([]interface{}, error) {
 func (j *JsonQuery) AsArray(s ...string) []interface{} {
 	val, err := j.Array(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -208,7 +233,9 @@ func (j *JsonQuery) Interface(s ...string) (interface{}, error) {
 func (j *JsonQuery) AsInterface(s ...string) interface{} {
 	val, err := j.Interface(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -233,7 +260,9 @@ func (j *JsonQuery) ArrayOfStrings(s ...string) ([]string, error) {
 func (j *JsonQuery) AsArrayOfStrings(s ...string) []string {
 	val, err := j.ArrayOfStrings(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -258,7 +287,9 @@ func (j *JsonQuery) ArrayOfInts(s ...string) ([]int, error) {
 func (j *JsonQuery) AsArrayOfInts(s ...string) []int {
 	val, err := j.ArrayOfInts(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -283,7 +314,9 @@ func (j *JsonQuery) ArrayOfFloats(s ...string) ([]float64, error) {
 func (j *JsonQuery) AsArrayOfFloats(s ...string) []float64 {
 	val, err := j.ArrayOfFloats(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -308,7 +341,9 @@ func (j *JsonQuery) ArrayOfBools(s ...string) ([]bool, error) {
 func (j *JsonQuery) AsArrayOfBools(s ...string) []bool {
 	val, err := j.ArrayOfBools(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -333,7 +368,9 @@ func (j *JsonQuery) ArrayOfObjects(s ...string) ([]map[string]interface{}, error
 func (j *JsonQuery) AsArrayOfObjects(s ...string) []map[string]interface{} {
 	val, err := j.ArrayOfObjects(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
@@ -358,7 +395,9 @@ func (j *JsonQuery) ArrayOfArrays(s ...string) ([][]interface{}, error) {
 func (j *JsonQuery) AsArrayOfArrays(s ...string) [][]interface{} {
 	val, err := j.ArrayOfArrays(s...)
 	if err != nil {
-		panic(err)
+		if j.SingleValuePanicOnError {
+			panic(err)
+		}
 	}
 	return val
 }
