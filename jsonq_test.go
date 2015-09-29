@@ -59,17 +59,43 @@ func TestQuery(t *testing.T) {
 		t.Errorf("Expecting 1, got %v\n", ival)
 	}
 	tErr(t, err)
+
+	ival = q.AsInt("foo")
+	if ival != 1 {
+		t.Errorf("Expecting 1, got %v\n", ival)
+	}
+
 	ival, err = q.Int("bar")
 	if ival != 2 {
 		t.Errorf("Expecting 2, got %v\n", ival)
 	}
 	tErr(t, err)
+	ival = q.AsInt("bar")
+	if ival != 2 {
+		t.Errorf("Expecting 2, got %v\n", ival)
+	}
 
 	ival, err = q.Int("subobj", "foo")
 	if ival != 1 {
 		t.Errorf("Expecting 1, got %v\n", ival)
 	}
 	tErr(t, err)
+
+	ival, err = q.Int("subobj.foo")
+	if ival != 1 {
+		t.Errorf("Expecting 1, got %v\n", ival)
+	}
+	tErr(t, err)
+
+	ival = q.AsInt("subobj", "foo")
+	if ival != 1 {
+		t.Errorf("Expecting 1, got %v\n", ival)
+	}
+
+	ival = q.AsInt("subobj.foo")
+	if ival != 1 {
+		t.Errorf("Expecting 1, got %v\n", ival)
+	}
 
 	// test that strings can get int-ed
 	ival, err = q.Int("numstring")
@@ -109,6 +135,17 @@ func TestQuery(t *testing.T) {
 		t.Errorf("Expecting \"hello\", got \"%s\"\n", sval)
 	}
 	tErr(t, err)
+
+	sval, err = q.String("subobj.subsubobj.array[0]")
+	if sval != "hello" {
+		t.Errorf("Expecting \"hello\", got \"%s\"\n", sval)
+	}
+	tErr(t, err)
+
+	sval = q.AsString("subobj.subsubobj.array[0]")
+	if sval != "hello" {
+		t.Errorf("Expecting \"hello\", got \"%s\"\n", sval)
+	}
 
 	bval, err := q.Bool("bool")
 	if !bval {

@@ -52,6 +52,29 @@ From here, you can query along different keys and indexes:
 	// data["subobj"] -> map[string]interface{}{"subobj": ...}
 	obj, err := jq.Object("subobj")
 
+Also you can query using a *path* specification as show in the examples below:
+
+	```go
+	// data["subobj"]["subarray"][1] -> 2
+	jq.Int("subobj.subarray[1]")
+
+	// data["subobj"]["subarray"]["array"][0] -> "hello"
+	jq.String("subobj.subsubobj.array[0]")
+	```
+
+Finally, As functions have been included so that if you are *sure* the call will succeed you can inline the values. If these calls encounter an error they will panic:
+
+	```go
+	// data["subobj"]["subarray"][1] -> 2
+	fmt.Printf("%d\n", jq.AsInt("subobj", "subarray", "1"))
+	fmt.Printf("%d\n", jq.AsInt("subobj.subarray[1]"))
+
+	// data["subobj"]["subarray"]["array"][0] -> "hello"
+	fmt.Printf("%s\n", jq.AsString("subobj", "subsubobj", "array", "0"))
+	fmt.Printf("%s\n", jq.AsString("subobj.subsubobj.array[0]"))
+	```
+
+
 	Notes:
 
 Missing keys, out of bounds indexes, and type failures will return errors.
