@@ -86,6 +86,11 @@ func NewQuery(data interface{}) *JsonQuery {
 	return j
 }
 
+// Get extracts a untyped field from the JsonQuery
+func (j *JsonQuery) Get(s ...string) (interface{}, error) {
+	return rquery(j.blob, s...)
+}
+
 // Bool extracts a bool the JsonQuery
 func (j *JsonQuery) Bool(s ...string) (bool, error) {
 	val, err := rquery(j.blob, s...)
