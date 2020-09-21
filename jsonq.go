@@ -3,6 +3,7 @@ package jsonq
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 // JsonQuery is an object that enables querying of a Go map with a simple
@@ -54,6 +55,10 @@ func intFromInterface(val interface{}) (int, error) {
 		ival, err := strconv.ParseFloat(val.(string), 64)
 		if err == nil {
 			return int(ival), nil
+		}
+		hval, err := strconv.ParseInt(strings.Replace(val.(string), ",", "", -1), 0, 64)
+		if err == nil {
+			return int(hval), nil
 		}
 	case int:
 		return val.(int), nil
